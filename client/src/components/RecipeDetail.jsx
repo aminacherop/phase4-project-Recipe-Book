@@ -4,6 +4,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { apiClient } from '../utils/api';
 import LoadingSpinner from './LoadingSpinner';
+import CommentsSection from './CommentsSection';
 
 function RecipeDetail() {
   const { id } = useParams();
@@ -37,6 +38,11 @@ function RecipeDetail() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleCommentAdded = () => {
+    // Refresh recipe data to show new comment
+    loadRecipe();
   };
 
   const handleFavorite = async () => {
@@ -422,6 +428,9 @@ function RecipeDetail() {
               {/* TODO: Add comments display */}
             </div>
           )}
+
+          {/* Comments Section */}
+          <CommentsSection recipe={recipe} onCommentAdded={handleCommentAdded} />
         </div>
       </div>
     </div>

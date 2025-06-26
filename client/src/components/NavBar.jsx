@@ -16,7 +16,7 @@ function NavBar() {
   };
 
   const publicLinks = [
-    { to: '/', label: 'Browse Recipes', icon: '🏠' },
+    { to: '/', label: 'Home', icon: '🏠' },
   ];
 
   const authLinks = [

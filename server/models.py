@@ -1,4 +1,4 @@
-from .extensions import db, bcrypt
+from extensions import db, bcrypt
 from sqlalchemy_serializer import SerializerMixin
 
 
@@ -33,7 +33,6 @@ class User(db.Model, SerializerMixin):
 
 class Category(db.Model, SerializerMixin):
     __tablename__ = 'categories'
-
 
     serialize_rules = (
         '-recipes.category',        
@@ -86,7 +85,6 @@ class Recipe(db.Model, SerializerMixin):
 class Comment(db.Model, SerializerMixin):
     __tablename__ = 'comments'
 
-    
     serialize_rules = (
         '-user.comments',          
         '-user.recipes',           
@@ -111,7 +109,6 @@ class Comment(db.Model, SerializerMixin):
 class FavoriteRecipe(db.Model, SerializerMixin):
     __tablename__ = 'favorite_recipes'
 
-    
     serialize_rules = (
         '-user.favorites',     
         '-user.recipes',         
