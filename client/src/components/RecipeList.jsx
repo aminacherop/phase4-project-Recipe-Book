@@ -1,59 +1,73 @@
-import React, { useEffect, useState } from "react";
-import RecipeCard from "./RecipeCard";
-import { useTheme } from "../ThemeContext";
+// src/components/RecipeList.jsx
+import React from 'react';
+import { useApp } from '../context/AppContext';
+import RecipeCard from './RecipeCard';
+import LoadingSpinner from './LoadingSpinner';
 
 function RecipeList() {
-  const [recipes, setRecipes] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { theme } = useTheme();
+  const { recipes, loading, theme } = useApp();
 
-  useEffect(() => {
-    fetch("http://localhost:5000/recipes") // adjust port if different
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch recipes");
-        console.log("Response:", res.status);
-        return res.json();
-      })
-      .then((data) => {
-        setRecipes(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching recipes:", err);
-        setLoading(false);
-      });
-  }, []);
+  const styles = {
+    container: {
+      maxWidth: '1400px',
+      margin: '0 auto',
+      padding: '2rem 1rem'
+    },
+    title: {
+      fontSize: '2.5rem',
+      fontWeight: '800',
+      textAlign: 'center',
+      marginBottom: '3rem',
+      background: theme === 'dark' 
+        ? 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)'
+        : 'linear-gradient(135deg, #1e40af 0%, #3730a3 100%)',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      backgroundClip: 'text'
+    },
+    stats: {
+      textAlign: 'center',
+      marginBottom: '2rem',
+      color: theme === 'dark' ? '#94a3b8' : '#64748b',
+      fontSize: '0.875rem'
+    },
+    noRecipes: {
+      textAlign: 'center',
+      padding: '4rem 2rem',
+      color: theme === 'dark' ? '#9ca3af' : '#6b7280'
+    }
+  };
 
-  if (loading) return <p style={{ textAlign: "center", marginTop: 40, fontSize: 22, color: theme === 'dark' ? '#e0e0e0' : '#22223b' }}>Loading recipes...</p>;
-  if (!recipes.length) return <p style={{ textAlign: "center", marginTop: 40, fontSize: 22, color: theme === 'dark' ? '#e0e0e0' : '#22223b' }}>No recipes available.</p>;
+  if (loading) {
+    return (
+      <div style={styles.container}>
+        <LoadingSpinner message="Loading delicious recipes..." />
+      </div>
+    );
+  }
 
-  // Styling
-  const pageStyle = {
-    minHeight: "80vh",
-    background: theme === "dark" ? "#181926" : "#f8f8fa",
-    padding: "2.5rem 0",
-    transition: "background 0.3s"
-  };
-  const gridStyle = {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-    gap: "2rem",
-    maxWidth: 1200,
-    margin: "0 auto"
-  };
-  const titleStyle = {
-    textAlign: "center",
-    color: theme === "dark" ? "#e0e0e0" : "#22223b",
-    fontSize: 36,
-    fontWeight: 700,
-    marginBottom: 32,
-    letterSpacing: 1
-  };
+  if (!recipes.length) {
+    return (
+      <div style={styles.container}>
+        <h1 style={styles.title}>Recipe Collection</h1>
+        <div style={styles.noRecipes}>
+          <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🍽️</div>
+          <h2>No recipes available yet</h2>
+          <p>Be the first to share a delicious recipe!</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div style={pageStyle}>
-      <h1 style={titleStyle}>All Recipes</h1>
-      <div style={gridStyle}>
+    <div style={styles.container}>
+      <h1 style={styles.title}>Recipe Collection</h1>
+      
+      <div style={styles.stats}>
+        Discover {recipes.length} amazing recipe{recipes.length !== 1 ? 's' : ''} from our community
+      </div>
+
+      <div className="recipe-grid">
         {recipes.map((recipe) => (
           <RecipeCard key={recipe.id} recipe={recipe} />
         ))}

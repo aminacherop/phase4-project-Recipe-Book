@@ -1,132 +1,221 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useTheme } from "../ThemeContext";
-import { UserContext } from "../UserContext";
+// src/components/RecipeCard.jsx
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useApp } from '../context/AppContext';
 
 function RecipeCard({ recipe }) {
-  const { theme } = useTheme();
-  const { user } = useContext(UserContext);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const { user, isAuthenticated, theme, toggleFavorite, isRecipeFavorited } = useApp();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
-  useEffect(() => {
-    if (user) {
-      fetch(`http://localhost:5000/users/${user.id}/favorite_recipes`)
-        .then(res => res.json())
-        .then(favs => {
-          setIsFavorite(favs.some(fav => fav.recipe_id === recipe.id));
-        });
-    } else {
-      setIsFavorite(false);
-    }
-  }, [user, recipe.id]);
+  const isFavorited = isRecipeFavorited(recipe.id);
 
-  const handleFavorite = (e) => {
+  const handleFavorite = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!user) {
-      console.log('Redirecting to login...');
-      setTimeout(() => navigate('/login'), 100);
+    
+    if (!isAuthenticated) {
+      navigate('/login');
       return;
     }
+
     setLoading(true);
-    if (!isFavorite) {
-      fetch("http://localhost:5000/favorite_recipes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ recipe_id: recipe.id })
-      })
-        .then(res => res.json())
-        .then(() => setIsFavorite(true))
-        .finally(() => setLoading(false));
-    } else {
-      fetch(`http://localhost:5000/users/${user.id}/favorite_recipes`)
-        .then(res => res.json())
-        .then(favs => {
-          const fav = favs.find(f => f.recipe_id === recipe.id);
-          if (fav) {
-            fetch(`http://localhost:5000/favorite_recipes/${fav.id}`, {
-              method: "DELETE",
-              credentials: "include"
-            })
-              .then(() => setIsFavorite(false))
-              .finally(() => setLoading(false));
-          } else {
-            setLoading(false);
-          }
-        });
-    }
+    await toggleFavorite(recipe.id);
+    setLoading(false);
   };
 
-  const cardStyle = {
-    border: "none",
-    borderRadius: 16,
-    boxShadow: theme === "dark" ? "0 4px 16px #0006" : "0 4px 16px #0001",
-    padding: 20,
-    background: theme === "dark" ? "#232946" : "#fff",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    transition: "box-shadow 0.2s, background 0.3s",
-    minHeight: 420,
-    position: "relative"
+  const handleImageError = () => {
+    setImageError(true);
   };
-  const imgStyle = {
-    width: "100%",
-    height: 200,
-    objectFit: "cover",
-    borderRadius: 12,
-    marginBottom: 16,
-    boxShadow: theme === "dark" ? "0 2px 8px #0006" : "0 2px 8px #0002"
-  };
-  const nameStyle = {
-    fontSize: 22,
-    fontWeight: 600,
-    color: theme === "dark" ? "#e0e0e0" : "#22223b",
-    margin: "10px 0 6px 0",
-    textAlign: "center"
-  };
-  const descStyle = {
-    color: theme === "dark" ? "#b8c1ec" : "#4a4e69",
-    fontSize: 15,
-    marginBottom: 18,
-    textAlign: "center",
-    minHeight: 40
-  };
-  const linkStyle = {
-    marginTop: "auto",
-    background: theme === "dark" ? "#393e46" : "#4a4e69",
-    color: "#fff",
-    padding: "8px 18px",
-    borderRadius: 8,
-    textDecoration: "none",
-    fontWeight: 600,
-    fontSize: 15,
-    transition: "background 0.2s"
-  };
-  const favBtnStyle = {
-    position: "absolute",
-    top: 18,
-    right: 18,
-    background: "none",
-    border: "none",
-    cursor: "pointer",
-    fontSize: 28,
-    color: isFavorite ? "#e63946" : theme === "dark" ? "#b8c1ec" : "#4a4e69",
-    transition: "color 0.2s"
+
+  const placeholderImage = `data:image/svg+xml,${encodeURIComponent(`
+    <svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="${theme === 'dark' ? '#374151' : '#f3f4f6'}"/>
+      <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="${theme === 'dark' ? '#9ca3af' : '#6b7280'}" font-family="Arial, sans-serif" font-size="16">
+        🍽️ ${recipe.name}
+      </text>
+    </svg>
+  `)}`;
+
+  const styles = {
+    card: {
+      background: theme === 'dark' 
+        ? 'linear-gradient(145deg, #374151 0%, #4b5563 100%)' 
+        : 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)',
+      borderRadius: '20px',
+      overflow: 'hidden',
+      boxShadow: isHovered 
+        ? (theme === 'dark' 
+          ? '0 20px 40px rgba(0, 0, 0, 0.4)' 
+          : '0 20px 40px rgba(0, 0, 0, 0.15)')
+        : (theme === 'dark' 
+          ? '0 8px 25px rgba(0, 0, 0, 0.3)' 
+          : '0 8px 25px rgba(0, 0, 0, 0.1)'),
+      transition: 'all 0.3s ease',
+      transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
+      border: theme === 'dark' ? '1px solid #4b5563' : '1px solid #e5e7eb',
+      position: 'relative',
+      display: 'flex',
+      flexDirection: 'column',
+      height: '450px'
+    },
+    imageContainer: {
+      position: 'relative',
+      height: '200px',
+      overflow: 'hidden'
+    },
+    image: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+      transition: 'transform 0.3s ease',
+      transform: isHovered ? 'scale(1.05)' : 'scale(1)'
+    },
+    favoriteButton: {
+      position: 'absolute',
+      top: '12px',
+      right: '12px',
+      background: 'rgba(255, 255, 255, 0.9)',
+      backdropFilter: 'blur(10px)',
+      border: 'none',
+      borderRadius: '12px',
+      width: '40px',
+      height: '40px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      cursor: 'pointer',
+      fontSize: '20px',
+      transition: 'all 0.2s',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+    },
+    content: {
+      padding: '24px',
+      display: 'flex',
+      flexDirection: 'column',
+      flex: 1,
+      gap: '12px'
+    },
+    title: {
+      fontSize: '1.25rem',
+      fontWeight: '700',
+      color: theme === 'dark' ? '#f1f5f9' : '#1e293b',
+      margin: 0,
+      lineHeight: '1.3',
+      overflow: 'hidden',
+      display: '-webkit-box',
+      WebkitLineClamp: 2,
+      WebkitBoxOrient: 'vertical'
+    },
+    description: {
+      color: theme === 'dark' ? '#cbd5e1' : '#64748b',
+      fontSize: '0.875rem',
+      lineHeight: '1.5',
+      margin: 0,
+      overflow: 'hidden',
+      display: '-webkit-box',
+      WebkitLineClamp: 3,
+      WebkitBoxOrient: 'vertical',
+      flex: 1
+    },
+    metadata: {
+      display: 'flex',
+      gap: '16px',
+      marginTop: 'auto',
+      paddingTop: '12px',
+      borderTop: theme === 'dark' ? '1px solid #4b5563' : '1px solid #e5e7eb'
+    },
+    timeInfo: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px',
+      fontSize: '0.75rem',
+      color: theme === 'dark' ? '#9ca3af' : '#6b7280',
+      fontWeight: '500'
+    },
+    viewButton: {
+      background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+      color: 'white',
+      textDecoration: 'none',
+      padding: '12px 24px',
+      borderRadius: '12px',
+      fontWeight: '600',
+      fontSize: '0.875rem',
+      textAlign: 'center',
+      transition: 'all 0.2s',
+      boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '8px'
+    }
   };
 
   return (
-    <div style={cardStyle}>
-      <button style={favBtnStyle} onClick={handleFavorite} disabled={loading} title={user ? (isFavorite ? "Remove from favorites" : "Add to favorites") : "Log in to favorite recipes"}>
-        {user ? (isFavorite ? "❤️" : "🤍") : "🤍"}
-      </button>
-      <img src={recipe.image_url} alt={recipe.name} style={imgStyle} />
-      <h2 style={nameStyle}>{recipe.name}</h2>
-      <p style={descStyle}>{recipe.description}</p>
-      <Link to={`/recipes/${recipe.id}`} style={linkStyle}>View Recipe</Link>
+    <div 
+      style={styles.card}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Image */}
+      <div style={styles.imageContainer}>
+        <img
+          src={imageError ? placeholderImage : recipe.image_url}
+          alt={recipe.name}
+          style={styles.image}
+          onError={handleImageError}
+          loading="lazy"
+        />
+        
+        {/* Favorite Button */}
+        <button
+          style={styles.favoriteButton}
+          onClick={handleFavorite}
+          disabled={loading}
+          title={
+            !isAuthenticated 
+              ? 'Login to favorite recipes' 
+              : isFavorited 
+                ? 'Remove from favorites' 
+                : 'Add to favorites'
+          }
+        >
+          {loading ? '⏳' : (isAuthenticated && isFavorited) ? '❤️' : '🤍'}
+        </button>
+      </div>
+
+      {/* Content */}
+      <div style={styles.content}>
+        <h3 style={styles.title}>{recipe.name}</h3>
+        
+        <p style={styles.description}>
+          {recipe.description || 'A delicious recipe waiting to be discovered!'}
+        </p>
+
+        {/* Metadata */}
+        <div style={styles.metadata}>
+          {recipe.prep_time && (
+            <div style={styles.timeInfo}>
+              <span>⏱️</span>
+              <span>{recipe.prep_time}m prep</span>
+            </div>
+          )}
+          {recipe.cook_time && (
+            <div style={styles.timeInfo}>
+              <span>🍳</span>
+              <span>{recipe.cook_time}m cook</span>
+            </div>
+          )}
+        </div>
+
+        {/* View Button */}
+        <Link to={`/recipes/${recipe.id}`} style={styles.viewButton}>
+          <span>👁️</span>
+          View Recipe
+        </Link>
+      </div>
     </div>
   );
 }
