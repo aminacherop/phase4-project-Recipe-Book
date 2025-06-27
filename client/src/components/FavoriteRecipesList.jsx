@@ -1,4 +1,3 @@
-// src/components/FavoriteRecipesList.jsx
 import React from 'react';
 import { useApp } from '../context/AppContext';
 import RecipeCard from './RecipeCard';

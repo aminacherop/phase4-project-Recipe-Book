@@ -1,4 +1,3 @@
-// src/components/CreateRecipeForm.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
@@ -29,7 +28,7 @@ function CreateRecipeForm() {
       [name]: value
     }));
     
-    // Clear specific error when user starts typing
+    
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -78,7 +77,7 @@ function CreateRecipeForm() {
     setErrors({});
     setSuccess('');
 
-    // Validate form
+    
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -87,7 +86,7 @@ function CreateRecipeForm() {
     }
 
     try {
-      // Prepare data for submission
+  
       const recipeData = {
         ...formData,
         prep_time: parseInt(formData.prep_time),
@@ -99,7 +98,7 @@ function CreateRecipeForm() {
       
       if (result.success) {
         setSuccess('Recipe created successfully!');
-        // Redirect to the new recipe after a short delay
+        
         setTimeout(() => {
           if (result.recipe?.id) {
             navigate(`/recipes/${result.recipe.id}`);
@@ -282,7 +281,7 @@ function CreateRecipeForm() {
         )}
 
         <form onSubmit={handleSubmit} style={styles.form}>
-          {/* Recipe Name */}
+        
           <div style={styles.inputGroup}>
             <label style={styles.label}>Recipe Name *</label>
             <input
@@ -297,7 +296,7 @@ function CreateRecipeForm() {
             {errors.name && <div style={styles.error}>{errors.name}</div>}
           </div>
 
-          {/* Description */}
+          
           <div style={styles.inputGroup}>
             <label style={styles.label}>Description *</label>
             <textarea
@@ -312,7 +311,7 @@ function CreateRecipeForm() {
             {errors.description && <div style={styles.error}>{errors.description}</div>}
           </div>
 
-          {/* Times and Category */}
+        
           <div style={styles.row}>
             <div style={styles.inputGroup}>
               <label style={styles.label}>Prep Time (minutes) *</label>
@@ -345,7 +344,7 @@ function CreateRecipeForm() {
             </div>
           </div>
 
-          {/* Category */}
+          
           <div style={styles.inputGroup}>
             <label style={styles.label}>Category (optional)</label>
             <select
@@ -363,7 +362,7 @@ function CreateRecipeForm() {
             </select>
           </div>
 
-          {/* Ingredients */}
+          
           <div style={styles.inputGroup}>
             <label style={styles.label}>Ingredients *</label>
             <textarea
@@ -378,7 +377,7 @@ function CreateRecipeForm() {
             {errors.ingredients && <div style={styles.error}>{errors.ingredients}</div>}
           </div>
 
-          {/* Instructions */}
+          
           <div style={styles.inputGroup}>
             <label style={styles.label}>Instructions *</label>
             <textarea
@@ -393,7 +392,7 @@ function CreateRecipeForm() {
             {errors.instructions && <div style={styles.error}>{errors.instructions}</div>}
           </div>
 
-          {/* Image URL */}
+          
           <div style={styles.inputGroup}>
             <label style={styles.label}>Image URL *</label>
             <input
@@ -408,7 +407,7 @@ function CreateRecipeForm() {
             {errors.image_url && <div style={styles.error}>{errors.image_url}</div>}
           </div>
 
-          {/* Buttons */}
+          
           <div style={styles.buttonRow}>
             <button
               type="button"

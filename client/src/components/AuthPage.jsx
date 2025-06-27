@@ -6,7 +6,7 @@ function AuthPage() {
   const { login, signup, theme } = useApp();
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const [isLogin, setIsLogin] = useState(location.pathname === '/login');
   const [formData, setFormData] = useState({
     username: '',
@@ -22,12 +22,12 @@ function AuthPage() {
     setError('');
 
     try {
-      const result = isLogin 
+      const result = isLogin
         ? await login({ username: formData.username, password: formData.password })
         : await signup(formData);
 
       if (result.success) {
-        // Redirect to the page they were trying to access, or home
+
         const from = location.state?.from?.pathname || '/';
         navigate(from, { replace: true });
       } else {
@@ -62,13 +62,13 @@ function AuthPage() {
       padding: '2rem'
     },
     card: {
-      background: theme === 'dark' 
-        ? 'linear-gradient(145deg, #374151 0%, #4b5563 100%)' 
+      background: theme === 'dark'
+        ? 'linear-gradient(145deg, #374151 0%, #4b5563 100%)'
         : 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)',
       borderRadius: '20px',
       padding: '3rem',
-      boxShadow: theme === 'dark' 
-        ? '0 20px 40px rgba(0, 0, 0, 0.4)' 
+      boxShadow: theme === 'dark'
+        ? '0 20px 40px rgba(0, 0, 0, 0.4)'
         : '0 20px 40px rgba(0, 0, 0, 0.1)',
       border: theme === 'dark' ? '1px solid #4b5563' : '1px solid #e5e7eb',
       width: '100%',

@@ -1,4 +1,3 @@
-// src/components/RecipeCard.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
@@ -159,7 +158,7 @@ function RecipeCard({ recipe }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Image */}
+    
       <div style={styles.imageContainer}>
         <img
           src={imageError ? placeholderImage : recipe.image_url}
@@ -169,7 +168,7 @@ function RecipeCard({ recipe }) {
           loading="lazy"
         />
         
-        {/* Favorite Button */}
+        
         <button
           style={styles.favoriteButton}
           onClick={handleFavorite}
@@ -186,7 +185,7 @@ function RecipeCard({ recipe }) {
         </button>
       </div>
 
-      {/* Content */}
+
       <div style={styles.content}>
         <h3 style={styles.title}>{recipe.name}</h3>
         
@@ -194,7 +193,7 @@ function RecipeCard({ recipe }) {
           {recipe.description || 'A delicious recipe waiting to be discovered!'}
         </p>
 
-        {/* Metadata */}
+        
         <div style={styles.metadata}>
           {recipe.prep_time && (
             <div style={styles.timeInfo}>
@@ -210,7 +209,7 @@ function RecipeCard({ recipe }) {
           )}
         </div>
 
-        {/* View Button */}
+        
         <Link to={`/recipes/${recipe.id}`} style={styles.viewButton}>
           <span>👁️</span>
           View Recipe

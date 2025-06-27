@@ -41,12 +41,12 @@ function CommentsSection({ recipe, onCommentAdded }) {
       setSuccess('Comment added successfully!');
       setNewComment({ text: '', rating: 0 });
 
-      // Notify parent to refresh recipe data
+      
       if (onCommentAdded) {
         onCommentAdded();
       }
 
-      // Clear success message after 3 seconds
+    
       setTimeout(() => setSuccess(''), 3000);
     } catch (err) {
       setError(err.message || 'Failed to add comment');
@@ -395,7 +395,7 @@ function CommentsSection({ recipe, onCommentAdded }) {
         </div>
       )}
 
-      {/* Comments List */}
+      
       <div style={styles.commentsContainer}>
         {recipe.comments?.length > 0 ? (
           recipe.comments

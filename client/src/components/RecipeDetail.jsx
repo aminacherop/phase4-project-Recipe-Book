@@ -25,7 +25,7 @@ function RecipeDetail() {
       setError(null);
       
       const response = await apiClient.getRecipe(id);
-      // Handle the response format from backend
+      
       if (response.data) {
         setRecipe(response.data);
       } else {
@@ -40,7 +40,7 @@ function RecipeDetail() {
   };
 
   const handleCommentAdded = () => {
-    // Refresh recipe data to show new comment
+    
     loadRecipe();
   };
 
@@ -314,7 +314,7 @@ function RecipeDetail() {
       </Link>
 
       <div style={styles.card}>
-        {/* Image Section */}
+      
         <div style={styles.imageContainer}>
           <img
             src={imageError ? placeholderImage : recipe.image_url}
@@ -323,7 +323,7 @@ function RecipeDetail() {
             onError={handleImageError}
           />
           
-          {/* Action Buttons */}
+          
           <div style={styles.actionButtons}>
             <button
               style={styles.favoriteButton}
@@ -353,7 +353,7 @@ function RecipeDetail() {
           </div>
         </div>
 
-        {/* Content Section */}
+        
         <div style={styles.content}>
           <h1 style={styles.title}>{recipe.name}</h1>
           
@@ -361,7 +361,7 @@ function RecipeDetail() {
             <p style={styles.description}>{recipe.description}</p>
           )}
 
-          {/* Metadata */}
+          
           <div style={styles.metadata}>
             {recipe.prep_time && (
               <div style={styles.metadataItem}>
@@ -389,7 +389,7 @@ function RecipeDetail() {
             )}
           </div>
 
-          {/* Ingredients */}
+    
           {ingredients.length > 0 && (
             <div style={styles.section}>
               <h2 style={styles.sectionTitle}>
@@ -406,7 +406,7 @@ function RecipeDetail() {
             </div>
           )}
 
-          {/* Instructions */}
+          
           {recipe.instructions && (
             <div style={styles.section}>
               <h2 style={styles.sectionTitle}>
@@ -418,17 +418,17 @@ function RecipeDetail() {
             </div>
           )}
 
-          {/* Comments Section - Placeholder for future */}
+          
           {recipe.comments && recipe.comments.length > 0 && (
             <div style={styles.section}>
               <h2 style={styles.sectionTitle}>
                 💬 Comments ({recipe.comments.length})
               </h2>
-              {/* TODO: Add comments display */}
+              
             </div>
           )}
 
-          {/* Comments Section */}
+          
           <CommentsSection recipe={recipe} onCommentAdded={handleCommentAdded} />
         </div>
       </div>
