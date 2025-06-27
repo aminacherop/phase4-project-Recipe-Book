@@ -1,4 +1,3 @@
-// src/components/RecipeDetail.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';

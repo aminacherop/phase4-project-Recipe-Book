@@ -1,4 +1,4 @@
-// src/components/CommentsSection.jsx
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
@@ -14,7 +14,7 @@ function CommentsSection({ recipe, onCommentAdded }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!isAuthenticated) {
       navigate('/login');
       return;
@@ -37,15 +37,15 @@ function CommentsSection({ recipe, onCommentAdded }) {
       };
 
       await apiClient.addComment(commentData);
-      
+
       setSuccess('Comment added successfully!');
       setNewComment({ text: '', rating: 0 });
-      
+
       // Notify parent to refresh recipe data
       if (onCommentAdded) {
         onCommentAdded();
       }
-      
+
       // Clear success message after 3 seconds
       setTimeout(() => setSuccess(''), 3000);
     } catch (err) {
@@ -92,11 +92,11 @@ function CommentsSection({ recipe, onCommentAdded }) {
     return stars;
   };
 
-  const averageRating = recipe.comments?.length > 0 
+  const averageRating = recipe.comments?.length > 0
     ? recipe.comments
-        .filter(comment => comment.rating)
-        .reduce((sum, comment) => sum + comment.rating, 0) / 
-      recipe.comments.filter(comment => comment.rating).length
+      .filter(comment => comment.rating)
+      .reduce((sum, comment) => sum + comment.rating, 0) /
+    recipe.comments.filter(comment => comment.rating).length
     : 0;
 
   const styles = {
@@ -132,8 +132,8 @@ function CommentsSection({ recipe, onCommentAdded }) {
       gap: '0.5rem'
     },
     commentForm: {
-      background: theme === 'dark' 
-        ? 'rgba(55, 65, 81, 0.3)' 
+      background: theme === 'dark'
+        ? 'rgba(55, 65, 81, 0.3)'
         : 'rgba(248, 250, 252, 0.8)',
       borderRadius: '16px',
       padding: '1.5rem',
@@ -197,8 +197,8 @@ function CommentsSection({ recipe, onCommentAdded }) {
       gap: '0.5rem'
     },
     loginPrompt: {
-      background: theme === 'dark' 
-        ? 'rgba(55, 65, 81, 0.3)' 
+      background: theme === 'dark'
+        ? 'rgba(55, 65, 81, 0.3)'
         : 'rgba(248, 250, 252, 0.8)',
       borderRadius: '12px',
       padding: '1.5rem',
@@ -225,8 +225,8 @@ function CommentsSection({ recipe, onCommentAdded }) {
       gap: '1rem'
     },
     comment: {
-      background: theme === 'dark' 
-        ? 'rgba(55, 65, 81, 0.2)' 
+      background: theme === 'dark'
+        ? 'rgba(55, 65, 81, 0.2)'
         : 'rgba(255, 255, 255, 0.8)',
       borderRadius: '12px',
       padding: '1.5rem',
@@ -298,7 +298,7 @@ function CommentsSection({ recipe, onCommentAdded }) {
             </span>
           )}
         </h3>
-        
+
         {recipe.comments?.length > 0 && (
           <div style={styles.summary}>
             {averageRating > 0 && (
@@ -321,14 +321,14 @@ function CommentsSection({ recipe, onCommentAdded }) {
           <h4 style={styles.formTitle}>
             ✍️ Share your experience
           </h4>
-          
+
           {error && (
             <div style={styles.message('error')}>
               <span>❌</span>
               {error}
             </div>
           )}
-          
+
           {success && (
             <div style={styles.message('success')}>
               <span>✅</span>
@@ -347,7 +347,7 @@ function CommentsSection({ recipe, onCommentAdded }) {
           <div style={styles.ratingSection}>
             <span style={styles.ratingLabel}>Rate this recipe (optional):</span>
             <div style={{ display: 'flex' }}>
-              {renderStars(newComment.rating, true, (rating) => 
+              {renderStars(newComment.rating, true, (rating) =>
                 setNewComment(prev => ({ ...prev, rating: rating === prev.rating ? 0 : rating }))
               )}
             </div>
@@ -411,14 +411,14 @@ function CommentsSection({ recipe, onCommentAdded }) {
                       {formatDate(comment.created_at)}
                     </span>
                   </div>
-                  
+
                   {comment.rating && (
                     <div style={styles.commentRating}>
                       {renderStars(comment.rating)}
                     </div>
                   )}
                 </div>
-                
+
                 <p style={styles.commentText}>
                   {comment.text}
                 </p>
