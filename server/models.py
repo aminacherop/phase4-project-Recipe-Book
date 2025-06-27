@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+from .extensions import db, bcrypt
+=======
 from extensions import db, bcrypt
+>>>>>>> main
 from sqlalchemy_serializer import SerializerMixin
 
 
@@ -34,6 +38,10 @@ class User(db.Model, SerializerMixin):
 class Category(db.Model, SerializerMixin):
     __tablename__ = 'categories'
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> main
     serialize_rules = (
         '-recipes.category',        
         '-recipes.user.recipes',  
@@ -85,6 +93,10 @@ class Recipe(db.Model, SerializerMixin):
 class Comment(db.Model, SerializerMixin):
     __tablename__ = 'comments'
 
+<<<<<<< HEAD
+    
+=======
+>>>>>>> main
     serialize_rules = (
         '-user.comments',          
         '-user.recipes',           
@@ -109,6 +121,10 @@ class Comment(db.Model, SerializerMixin):
 class FavoriteRecipe(db.Model, SerializerMixin):
     __tablename__ = 'favorite_recipes'
 
+<<<<<<< HEAD
+    
+=======
+>>>>>>> main
     serialize_rules = (
         '-user.favorites',     
         '-user.recipes',         
@@ -125,4 +141,8 @@ class FavoriteRecipe(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'), nullable=False)
 
+<<<<<<< HEAD
     __table_args__ = (db.UniqueConstraint('user_id', 'recipe_id'),)
+=======
+    __table_args__ = (db.UniqueConstraint('user_id', 'recipe_id'),)
+>>>>>>> main

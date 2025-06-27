@@ -1,4 +1,3 @@
-// src/components/CreateRecipeForm.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';

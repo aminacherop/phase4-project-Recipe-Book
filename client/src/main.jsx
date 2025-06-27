@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './index.css';
+import './index.css';
+
+import { BrowserRouter } from 'react-router-dom';
+=======
 // src/main.jsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -78,6 +87,7 @@ const globalStyles = `
 const styleElement = document.createElement('style');
 styleElement.textContent = globalStyles;
 document.head.appendChild(styleElement);
+>>>>>>> main
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
