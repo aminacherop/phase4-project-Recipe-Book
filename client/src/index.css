@@ -22,45 +22,6 @@
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-<<<<<<< HEAD
-.edit-form {
-  max-width: 600px;
-  margin: 2rem auto;
-  background: #fefefe;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-}
-
-.edit-form .form {
-  display: flex;
-  flex-direction: column;
-}
-
-.edit-form label {
-  margin-top: 1rem;
-}
-
-.edit-form input,
-.edit-form textarea {
-  padding: 0.5rem;
-  margin-top: 0.25rem;
-}
-
-.edit-form button {
-  margin-top: 1.5rem;
-  padding: 0.75rem;
-  background: #6a5acd;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.error {
-  color: red;
-  font-size: 0.8rem;
-=======
 /* Enhanced Grid Layout */
 .recipe-grid {
   display: grid;
@@ -132,5 +93,4 @@ select:focus {
 
 .loading {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
->>>>>>> main
 }
