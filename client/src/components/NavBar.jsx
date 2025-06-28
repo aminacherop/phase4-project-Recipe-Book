@@ -21,7 +21,7 @@ function NavBar() {
   const authLinks = [
     { to: '/recipes/new', label: 'Add Recipe', icon: '➕' },
     { to: '/my-recipes', label: 'My Recipes', icon: '👨‍🍳' },
-    { to: '/my-favorites', label: 'Favorites', icon: '❤️' },
+    { to: '/my-favorites', label: 'My Favorites', icon: '❤️' },
   ];
 
   const guestLinks = [
