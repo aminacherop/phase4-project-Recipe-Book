@@ -40,10 +40,11 @@ function CommentsSection({ recipe, onCommentAdded }) {
       setSuccess('Comment added successfully!');
       setNewComment({ text: '', rating: 0 });
       
-      
+    
       if (onCommentAdded) {
         onCommentAdded();
       }
+      
       
       
       setTimeout(() => setSuccess(''), 3000);
@@ -287,7 +288,7 @@ function CommentsSection({ recipe, onCommentAdded }) {
 
   return (
     <div style={styles.section}>
-      {/* Section Header */}
+    
       <div style={styles.header}>
         <h3 style={styles.title}>
           💬 Comments
@@ -314,7 +315,7 @@ function CommentsSection({ recipe, onCommentAdded }) {
         )}
       </div>
 
-      
+    
       {isAuthenticated ? (
         <form onSubmit={handleSubmit} style={styles.commentForm}>
           <h4 style={styles.formTitle}>
