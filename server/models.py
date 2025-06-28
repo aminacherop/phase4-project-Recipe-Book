@@ -5,7 +5,7 @@ from sqlalchemy_serializer import SerializerMixin
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    # serialize rules to prevent recursion
+
     serialize_rules = (
         '-password_hash',  
         '-recipes.user',  
