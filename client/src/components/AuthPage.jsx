@@ -1,4 +1,3 @@
-// src/components/AuthPage.jsx
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
@@ -28,7 +27,7 @@ function AuthPage() {
         : await signup(formData);
 
       if (result.success) {
-        // Redirect to the page they were trying to access, or home
+
         const from = location.state?.from?.pathname || '/';
         navigate(from, { replace: true });
       } else {

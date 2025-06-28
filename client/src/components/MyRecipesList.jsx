@@ -1,4 +1,3 @@
-// src/components/MyRecipesList.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
@@ -119,7 +118,7 @@ function MyRecipesList() {
         </p>
       </div>
 
-      {/* Quick Stats */}
+      
       {myRecipes.length > 0 && (
         <div style={styles.quickActions}>
           <div style={styles.actionCard}>

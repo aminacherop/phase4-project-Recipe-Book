@@ -1,4 +1,4 @@
-// src/components/EditRecipeForm.jsx
+
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
@@ -40,13 +40,13 @@ function EditRecipeForm() {
         const recipe = response.data;
         setOriginalRecipe(recipe);
         
-        // Check if user owns this recipe
+    
         if (user && recipe.user_id !== user.id) {
           navigate('/');
           return;
         }
         
-        // Auto-fill form with current recipe data
+        
         setFormData({
           name: recipe.name || '',
           description: recipe.description || '',
@@ -75,7 +75,7 @@ function EditRecipeForm() {
       [name]: value
     }));
     
-    // Clear specific error when user starts typing
+    
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -124,7 +124,7 @@ function EditRecipeForm() {
     setErrors({});
     setSuccess('');
 
-    // Validate form
+    
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -133,7 +133,7 @@ function EditRecipeForm() {
     }
 
     try {
-      // Prepare data for submission
+      
       const recipeData = {
         ...formData,
         prep_time: parseInt(formData.prep_time),
@@ -145,7 +145,7 @@ function EditRecipeForm() {
       
       if (result.success) {
         setSuccess('Recipe updated successfully!');
-        // Redirect to the recipe after a short delay
+        
         setTimeout(() => {
           navigate(`/recipes/${id}`);
         }, 1500);
@@ -436,7 +436,7 @@ function EditRecipeForm() {
         )}
 
         <form onSubmit={handleSubmit} style={styles.form}>
-          {/* Basic Information */}
+          
           <div style={styles.section}>
             <h3 style={styles.sectionTitle}>
               <span>📝</span>
@@ -486,7 +486,7 @@ function EditRecipeForm() {
             </div>
           </div>
 
-          {/* Timing & Category */}
+          
           <div style={styles.section}>
             <h3 style={styles.sectionTitle}>
               <span>⏰</span>
@@ -557,7 +557,7 @@ function EditRecipeForm() {
             </div>
           </div>
 
-          {/* Content */}
+          
           <div style={styles.section}>
             <h3 style={styles.sectionTitle}>
               <span>🥄</span>
@@ -628,7 +628,7 @@ function EditRecipeForm() {
             </div>
           </div>
 
-          {/* Action Buttons */}
+          
           <div style={styles.buttonRow}>
             <button
               type="button"
