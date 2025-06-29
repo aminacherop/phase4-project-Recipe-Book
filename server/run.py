@@ -13,24 +13,20 @@ def main():
     print("🍳 Recipe Book Backend")
     print("=" * 30)
     
-    # Check if database exists
     db_path = os.path.join(os.path.dirname(__file__), 'instance', 'recipe_book.db')
     
     if not os.path.exists(db_path):
         print("📋 Database not found. Setting up...")
         
-        # Setup database
         from setup import setup_database
         setup_database()
         
-        # Run seed script
         print("\n🌱 Seeding database with sample data...")
         exec(open('seed.py').read())
     
     else:
         print("📋 Database found. Starting server...")
     
-    # Start the Flask app
     print("\n🚀 Starting Flask server...")
     print("📍 Server will be available at: http://localhost:5000")
     print("🛑 Press Ctrl+C to stop the server\n")

@@ -1,25 +1,21 @@
 import sys
 import os
 
-# Add the server directory to Python path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from app import create_app
 from extensions import db
 from models import User, Recipe, Category, Comment, FavoriteRecipe
 
-# Create app and setup database
 app = create_app()
 
 with app.app_context():
-    # Drop all tables and recreate
     print("Dropping existing tables...")
     db.drop_all()
     
     print("Creating new tables...")
     db.create_all()
 
-    # Create categories first
     print("Creating categories...")
     categories = [
         Category(name="Breakfast"),
@@ -38,7 +34,6 @@ with app.app_context():
         db.session.add(category)
     db.session.commit()
 
-    # Create users
     print("Creating users...")
     users = []
     
@@ -62,14 +57,12 @@ with app.app_context():
         db.session.add(user)
     db.session.commit()
 
-    # Get category IDs for recipes
     breakfast_cat = Category.query.filter_by(name="Breakfast").first()
     dessert_cat = Category.query.filter_by(name="Dessert").first()
     dinner_cat = Category.query.filter_by(name="Dinner").first()
     vegan_cat = Category.query.filter_by(name="Vegan").first()
     salad_cat = Category.query.filter_by(name="Salad").first()
 
-    # Create recipes
     print("Creating recipes...")
     recipes = [
         Recipe(
@@ -166,7 +159,6 @@ with app.app_context():
         db.session.add(recipe)
     db.session.commit()
 
-    # Create some comments
     print("Creating comments...")
     comments = [
         Comment(
@@ -205,7 +197,6 @@ with app.app_context():
         db.session.add(comment)
     db.session.commit()
 
-    # Create some favorite recipes
     print("Creating favorite recipes...")
     favorites = [
         FavoriteRecipe(user_id=user1.id, recipe_id=recipes[1].id),  # amina likes chocolate cake
@@ -222,7 +213,6 @@ with app.app_context():
         db.session.add(favorite)
     db.session.commit()
 
-    # Print summary
     print("\n" + "="*50)
     print("DATABASE SEEDED SUCCESSFULLY!")
     print("="*50)

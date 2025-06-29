@@ -15,17 +15,14 @@ def setup_database():
     print("🚀 Setting up Recipe Book Database...")
     print("-" * 40)
     
-    # Create app
     app = create_app()
     
     with app.app_context():
-        # Create instance folder if it doesn't exist
         instance_path = os.path.join(os.path.dirname(__file__), 'instance')
         if not os.path.exists(instance_path):
             os.makedirs(instance_path)
             print("📁 Created instance folder")
         
-        # Create all database tables
         print("📋 Creating database tables...")
         db.create_all()
         print("✅ Database tables created successfully")

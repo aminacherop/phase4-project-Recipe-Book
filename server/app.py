@@ -5,17 +5,15 @@ from config import Config
 from models import Recipe, User, Category, Comment, FavoriteRecipe
 from functools import wraps
 
-def create_app():
+def create_app():  
     app = Flask(__name__)
     app.config.from_object(Config)
     
-    # Initialize extensions
     CORS(app, supports_credentials=True)
     db.init_app(app)
     migrate.init_app(app, db)
     bcrypt.init_app(app)
 
-    # Helper functions
     def success_response(data=None, message=None, status=200):
         response = {}
         if data is not None:
@@ -27,7 +25,6 @@ def create_app():
     def error_response(error, status=400):
         return jsonify({'error': error}), status
 
-    # Authentication decorator
     def require_auth(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
@@ -36,7 +33,6 @@ def create_app():
             return f(*args, **kwargs)
         return decorated_function
 
-    # AUTH ROUTES
     @app.route('/signup', methods=['POST'])
     def signup():
         try:
@@ -122,7 +118,6 @@ def create_app():
         except Exception as e:
             return error_response(str(e), 500)
 
-    # RECIPE ROUTES
     @app.route('/recipes', methods=['GET'])
     def get_recipes():
         try:
@@ -258,7 +253,6 @@ def create_app():
         except Exception as e:
             return error_response(str(e), 500)
 
-    # FAVORITE ROUTES
     @app.route('/favorite_recipes', methods=['POST'])
     @require_auth
     def create_favorite():
@@ -327,7 +321,6 @@ def create_app():
         except Exception as e:
             return error_response(str(e), 500)
 
-    # COMMENT ROUTES
     @app.route('/comments', methods=['POST'])
     @require_auth
     def create_comment():
@@ -369,7 +362,6 @@ def create_app():
             db.session.rollback()
             return error_response(str(e), 500)
 
-    # CATEGORY ROUTES
     @app.route('/categories', methods=['GET'])
     def get_categories():
         try:
@@ -381,7 +373,6 @@ def create_app():
 
     return app
 
-# Create app instance
 app = create_app()
 
 if __name__ == "__main__":
