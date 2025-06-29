@@ -1,4 +1,3 @@
-// src/main.jsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
@@ -74,7 +73,6 @@ const globalStyles = `
   }
 `;
 
-// Inject global styles
 const styleElement = document.createElement('style');
 styleElement.textContent = globalStyles;
 document.head.appendChild(styleElement);

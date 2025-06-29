@@ -1,4 +1,4 @@
-// src/App.jsx
+
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AppProvider, useApp } from './context/AppContext';
@@ -14,7 +14,6 @@ import ProtectedRoute from './components/ProtectedRoute';
 import LoadingSpinner from './components/LoadingSpinner';
 import ErrorBoundary from './components/ErrorBoundary';
 
-// App Layout Component
 function AppLayout() {
   const { theme, loading, error } = useApp();
 
@@ -93,13 +92,13 @@ function AppLayout() {
       <NavBar />
       <main style={mainStyles}>
         <Routes>
-          {/* Public Routes */}
+        
           <Route path="/" element={<RecipeList />} />
           <Route path="/recipes/:id" element={<RecipeDetail />} />
           <Route path="/login" element={<AuthPage />} />
           <Route path="/signup" element={<AuthPage />} />
           
-          {/* Protected Routes */}
+          
           <Route path="/recipes/new" element={
             <ProtectedRoute>
               <CreateRecipeForm />
@@ -121,7 +120,7 @@ function AppLayout() {
             </ProtectedRoute>
           } />
           
-          {/* 404 Route */}
+          
           <Route path="*" element={
             <div style={{
               display: 'flex',
@@ -159,7 +158,7 @@ function AppLayout() {
   );
 }
 
-// Main App Component
+
 function App() {
   return (
     <ErrorBoundary>

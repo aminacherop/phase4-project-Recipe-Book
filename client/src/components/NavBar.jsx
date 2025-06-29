@@ -1,4 +1,3 @@
-// src/components/NavBar.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
@@ -135,15 +134,15 @@ function NavBar() {
   return (
     <nav style={styles.nav}>
       <div style={styles.container}>
-        {/* Logo */}
+    
         <Link to="/" style={styles.logo}>
-          <span>🍳</span>
+          <span>📖</span>
           Recipe Book
         </Link>
 
-        {/* Navigation Links */}
+      
         <ul style={styles.links}>
-          {/* Public Links */}
+          
           {publicLinks.map(link => (
             <li key={link.to}>
               <Link to={link.to} style={styles.link(isActiveLink(link.to))}>
@@ -153,7 +152,7 @@ function NavBar() {
             </li>
           ))}
           
-          {/* Authenticated Links */}
+          
           {isAuthenticated && authLinks.map(link => (
             <li key={link.to}>
               <Link to={link.to} style={styles.link(isActiveLink(link.to))}>
@@ -163,7 +162,7 @@ function NavBar() {
             </li>
           ))}
           
-          {/* Guest Links */}
+          
           {!isAuthenticated && guestLinks.map(link => (
             <li key={link.to}>
               <Link to={link.to} style={styles.link(isActiveLink(link.to))}>
@@ -174,7 +173,7 @@ function NavBar() {
           ))}
         </ul>
 
-        {/* User Area */}
+        
         <div style={styles.userArea}>
           {isAuthenticated ? (
             <>

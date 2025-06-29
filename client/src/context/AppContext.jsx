@@ -1,32 +1,32 @@
-// src/context/AppContext.jsx
+
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { apiClient } from '../utils/api';
 
 const AppContext = createContext();
 
 export function AppProvider({ children }) {
-  // Auth state
+
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   
-  // Data state
+  
   const [recipes, setRecipes] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [categories, setCategories] = useState([]);
   
-  // UI state
+  
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('theme') || 'light';
   });
 
-  // Initialize app data
+  
   useEffect(() => {
     initializeApp();
   }, []);
 
-  // Theme persistence
+
   useEffect(() => {
     localStorage.setItem('theme', theme);
     document.documentElement.setAttribute('data-theme', theme);
@@ -37,16 +37,16 @@ export function AppProvider({ children }) {
       setLoading(true);
       setError(null);
       
-      // Check authentication status
+      
       const authResponse = await apiClient.checkSession();
       if (authResponse.data?.logged_in && authResponse.data?.user) {
         setUser(authResponse.data.user);
         setIsAuthenticated(true);
-        // Load user-specific data
+      
         await loadUserData(authResponse.data.user.id);
       }
       
-      // Load public data
+      
       await Promise.all([
         loadRecipes(),
         loadCategories()
@@ -87,7 +87,7 @@ export function AppProvider({ children }) {
     }
   };
 
-  // Auth actions
+
   const login = async (credentials) => {
     try {
       const response = await apiClient.login(credentials);
@@ -125,7 +125,7 @@ export function AppProvider({ children }) {
       return { success: true };
     } catch (err) {
       console.error('Logout error:', err);
-      // Force logout on client side even if server fails
+    
       setUser(null);
       setIsAuthenticated(false);
       setFavorites([]);
@@ -133,12 +133,11 @@ export function AppProvider({ children }) {
     }
   };
 
-  // Recipe actions
   const addRecipe = async (recipeData) => {
     try {
       const response = await apiClient.createRecipe(recipeData);
       if (response.data) {
-        await loadRecipes(); // Refresh recipes list
+        await loadRecipes(); 
         return { success: true, recipe: response.data };
       }
     } catch (err) {
@@ -150,7 +149,7 @@ export function AppProvider({ children }) {
     try {
       const response = await apiClient.updateRecipe(id, recipeData);
       if (response.data) {
-        await loadRecipes(); // Refresh recipes list
+        await loadRecipes(); 
         return { success: true, recipe: response.data };
       }
     } catch (err) {
@@ -161,14 +160,14 @@ export function AppProvider({ children }) {
   const deleteRecipe = async (id) => {
     try {
       await apiClient.deleteRecipe(id);
-      await loadRecipes(); // Refresh recipes list
+      await loadRecipes(); 
       return { success: true };
     } catch (err) {
       return { success: false, error: err.message };
     }
   };
 
-  // Favorite actions with optimistic updates
+
   const toggleFavorite = async (recipeId) => {
     if (!isAuthenticated) {
       return { success: false, error: 'Please log in to favorite recipes' };
@@ -176,7 +175,7 @@ export function AppProvider({ children }) {
 
     const isFavorited = favorites.some(fav => fav.recipe_id === recipeId);
     
-    // Optimistic update
+    
     if (isFavorited) {
       setFavorites(prev => prev.filter(fav => fav.recipe_id !== recipeId));
     } else {
@@ -193,11 +192,11 @@ export function AppProvider({ children }) {
         await apiClient.addFavorite(recipeId);
       }
       
-      // Refresh favorites to get correct IDs
+      
       await loadUserData(user.id);
       return { success: true };
     } catch (err) {
-      // Revert optimistic update
+      
       if (isFavorited) {
         setFavorites(prev => [...prev, { recipe_id: recipeId, user_id: user.id }]);
       } else {
@@ -207,12 +206,11 @@ export function AppProvider({ children }) {
     }
   };
 
-  // Theme actions
+
   const toggleTheme = () => {
     setTheme(prev => prev === 'light' ? 'dark' : 'light');
   };
 
-  // Utility functions
   const isRecipeFavorited = (recipeId) => {
     return favorites.some(fav => fav.recipe_id === recipeId);
   };
@@ -227,7 +225,7 @@ export function AppProvider({ children }) {
   };
 
   const contextValue = {
-    // State
+    
     user,
     isAuthenticated,
     recipes,
@@ -237,7 +235,7 @@ export function AppProvider({ children }) {
     error,
     theme,
     
-    // Actions
+  
     login,
     signup,
     logout,
@@ -247,7 +245,7 @@ export function AppProvider({ children }) {
     toggleFavorite,
     toggleTheme,
     
-    // Utilities
+  
     isRecipeFavorited,
     getFavoriteRecipes,
     getUserRecipes,
