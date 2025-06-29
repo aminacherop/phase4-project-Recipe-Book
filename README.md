@@ -2,26 +2,7 @@
 
 A full-stack web application for discovering, creating, and managing recipes with social features like favorites and comments.
 
-## 🏗️ Architecture Overview
-
-```
-┌─────────────────┐    HTTP/JSON    ┌─────────────────┐
-│                 │ ◄──────────────► │                 │
-│  React Frontend │                 │  Flask Backend  │
-│   (Port 5173)   │                 │  (Port 5000)    │
-│                 │                 │                 │
-└─────────────────┘                 └─────────────────┘
-                                              │
-                                              ▼
-                                    ┌─────────────────┐
-                                    │                 │
-                                    │ SQLite Database │
-                                    │                 │
-                                    └─────────────────┘
-```
-
-## 🎯 User Interaction Flow
-
+##  User Interaction Flow
 ### Anonymous User Journey
 1. **Browse Recipes** → View recipe grid without authentication
 2. **View Recipe Details** → Full recipe information, comments visible
@@ -406,14 +387,14 @@ App
 ### State Management Flow
 
 ```javascript
-// Global App State
+
 {
-  user: null | UserObject,           // Current authenticated user
-  theme: 'light' | 'dark',          // UI theme preference
-  recipes: Recipe[],                // All public recipes
-  favorites: FavoriteRecipe[],      // User's favorite recipes
-  loading: boolean,                 // Global loading state
-  error: string | null              // Global error state
+  user: null | UserObject,        
+  theme: 'light' | 'dark',         
+  recipes: Recipe[],                
+  favorites: FavoriteRecipe[],      
+  loading: boolean,                 
+  error: string | null              
 }
 ```
 
@@ -498,18 +479,18 @@ def require_auth(f):
 ### Database Models with Serialization
 
 ```python
-# models.py
+
 class Recipe(db.Model, SerializerMixin):
     serialize_rules = (
-        '-user.recipes',      # Prevent circular references
-        '-comments.recipe',   # Avoid infinite loops
+        '-user.recipes',      
+        '-comments.recipe',   
     )
     
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    # ... other fields
     
-    # Relationships
+    
+    
     user = db.relationship("User", backref="recipes")
     comments = db.relationship("Comment", cascade="all, delete")
 ```
@@ -533,7 +514,7 @@ class Recipe(db.Model, SerializerMixin):
    ```bash
    cd server
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   source venv/bin/activate  
    pip install -r requirements.txt
    ```
 
@@ -542,7 +523,7 @@ class Recipe(db.Model, SerializerMixin):
    flask db init
    flask db migrate -m "Initial migration"
    flask db upgrade
-   python seed.py  # Load sample data
+   python seed.py  
    ```
 
 4. **Frontend Setup**
@@ -648,13 +629,8 @@ All API responses follow a consistent format:
    - Invalid form submissions
    - Unauthorized access attempts
 
-## 📞 Support
+## 📞 Licence 
 
-For questions or issues:
-1. Check existing issues in the repository
-2. Create a new issue with detailed description
-3. Include steps to reproduce any bugs
-
----
-
-**Note**: This application is designed for educational purposes and development use. For production deployment, additional security measures, environment configuration, and performance optimizations would be required.
+License
+This project is licensed under the MIT License.
+Feel free to use, modify, and distribute it as you wish.

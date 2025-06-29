@@ -63,7 +63,7 @@ function RecipeList() {
       <h1 style={styles.title}>Recipe Collection</h1>
       
       <div style={styles.stats}>
-        Discover {recipes.length} amazing recipe{recipes.length !== 1 ? 's' : ''} from our community
+        Discover {recipes.length} amazing recipe{recipes.length !== 1 ? 's' : ''} from our Recipe Book
       </div>
 
       <div className="recipe-grid">
