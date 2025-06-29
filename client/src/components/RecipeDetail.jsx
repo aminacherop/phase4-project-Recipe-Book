@@ -1,4 +1,3 @@
-// src/components/RecipeDetail.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
@@ -26,7 +25,7 @@ function RecipeDetail() {
       setError(null);
       
       const response = await apiClient.getRecipe(id);
-      // Handle the response format from backend
+    
       if (response.data) {
         setRecipe(response.data);
       } else {
@@ -41,7 +40,6 @@ function RecipeDetail() {
   };
 
   const handleCommentAdded = () => {
-    // Refresh recipe data to show new comment
     loadRecipe();
   };
 
@@ -419,7 +417,7 @@ function RecipeDetail() {
             </div>
           )}
 
-          {/* Comments Section - Placeholder for future */}
+        
           {recipe.comments && recipe.comments.length > 0 && (
             <div style={styles.section}>
               <h2 style={styles.sectionTitle}>

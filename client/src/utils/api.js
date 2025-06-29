@@ -1,4 +1,4 @@
-// src/utils/api.js
+
 const API_BASE = 'http://localhost:5000';
 
 class APIClient {
@@ -27,7 +27,7 @@ class APIClient {
     }
   }
 
-  // HTTP Methods
+  
   get(endpoint) {
     return this.request(endpoint);
   }
@@ -52,7 +52,7 @@ class APIClient {
     });
   }
 
-  // Auth endpoints
+
   signup(userData) {
     return this.post('/signup', userData);
   }
@@ -69,7 +69,7 @@ class APIClient {
     return this.get('/check_session');
   }
 
-  // Recipe endpoints
+
   getRecipes() {
     return this.get('/recipes');
   }
@@ -94,7 +94,7 @@ class APIClient {
     return this.get(`/users/${userId}/recipes`);
   }
 
-  // Favorite endpoints
+
   addFavorite(recipeId) {
     return this.post('/favorite_recipes', { recipe_id: recipeId });
   }
@@ -107,12 +107,11 @@ class APIClient {
     return this.get(`/users/${userId}/favorite_recipes`);
   }
 
-  // Comment endpoints
   addComment(commentData) {
     return this.post('/comments', commentData);
   }
 
-  // Category endpoints
+  
   getCategories() {
     return this.get('/categories');
   }

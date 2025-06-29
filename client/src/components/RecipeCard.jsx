@@ -1,4 +1,4 @@
-// src/components/RecipeCard.jsx
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
@@ -212,7 +212,7 @@ function RecipeCard({ recipe }) {
 
         {/* View Button */}
         <Link to={`/recipes/${recipe.id}`} style={styles.viewButton}>
-          <span>👁️</span>
+          
           View Recipe
         </Link>
       </div>
