@@ -212,7 +212,7 @@ function RecipeCard({ recipe }) {
 
         {/* View Button */}
         <Link to={`/recipes/${recipe.id}`} style={styles.viewButton}>
-          <span>👁️</span>
+          
           View Recipe
         </Link>
       </div>

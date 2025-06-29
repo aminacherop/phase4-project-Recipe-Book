@@ -37,7 +37,7 @@ function NavBar() {
     nav: {
       background: theme === 'dark' 
         ? 'linear-gradient(135deg, #1e293b 0%, #334155 100%)' 
-        : 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+        : 'linear-gradient(135deg,rgb(144, 100, 216) 0%, #f8fafc 100%)',
       backdropFilter: 'blur(20px)',
       borderBottom: theme === 'dark' ? '1px solid #374151' : '1px solid #e5e7eb',
       boxShadow: theme === 'dark' 
